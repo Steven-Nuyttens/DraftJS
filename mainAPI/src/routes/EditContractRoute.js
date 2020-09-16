@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const EditContract = require('../models/')
+const EditContract = require('../models/EditContractModel')
 
 
 
 
 router.get('/EditContract', function(req, res) {
     EditContract.find({})
-    .then(function(form) {
-        res.send(form)
+    .then(function(created) {
+        res.send(created)
     })
     .catch( err => {
         console.error(err)
@@ -21,9 +21,9 @@ router.get('/EditContract', function(req, res) {
 
 router.post('/EditContract', function(req, res){
     console.log(req.body);
-    EditContract.create({text:req.body.text})
-    .then(function(form) {
-         res.send(form)
+    EditContract.create({content:req.body.text})
+    .then(function(created) {
+         res.send(created)
 
     })
     .catch( err => {

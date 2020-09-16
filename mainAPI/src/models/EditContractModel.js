@@ -2,12 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const EditContractSchema = new Schema({
-    text: {
-        type:String,
-        required:true
+    content: {
+        content:String
     }
 });
 
-const EditContract = mongoose.model('', EditContractSchema)
+const EditContractModel = mongoose.model('', EditContractSchema)
 
-module.exports = EditContract
+module.exports = EditContractModel
