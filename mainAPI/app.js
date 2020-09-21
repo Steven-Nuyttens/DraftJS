@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 const nconf = require('nconf');
 const cookieParser = require('cookie-parser');
-const routes = require('./src/routes/EditContractRoute');
+const EditContractRoute = require('./src/routes/EditContractRoute');
 
 
 var app = express();
@@ -37,7 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.text());
 app.use(bodyParser.json());
-app.use(basePath, routes);
+//app.use(basePath, routes);
+app.use(basePath, EditContractRoute);
 
 
 

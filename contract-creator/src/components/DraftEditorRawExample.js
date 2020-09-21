@@ -26,7 +26,7 @@ export default class DraftEditorRawExample extends React.Component {
   postText(e) {
     const contentState = this.state.editorState.getCurrentContent();
     var content = {
-      content: convertToRaw(contentState),
+      
       title: convertToRaw(contentState).blocks[0].text,
     };
     console.log(content);
