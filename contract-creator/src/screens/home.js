@@ -1,8 +1,12 @@
 import React from "react";
 import Contracts from "./Contracts";
-import EditContract from "./EditContract";
+import DraftEditorRawExample from "./../components/DraftEditorRawExample";
+
 import styled from "styled-components";
 import Header from "./../components/header/header";
+import { Editor, EditorState, RichUtils, convertToRaw, Modifier, convertFromRaw, KeyBindingUtil } from "draft-js";
+import axios from "axios";
+import AlterContracts from "./AlterContracts";
 
 const InputField = styled.div`
   margin: 10px;
@@ -23,7 +27,37 @@ const Answer = styled.h3`
   justify-content: center;
 `;
 
+const SubmitButton = styled.button`
+  background-color: white;
+  border: 2px solid #aaaaaa;
+  border-radius: 10px;
+  margin: 1%;
+`;
+
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+		this.state = { editorState: EditorState.createEmpty() };
+
+	}
+
+  postText(e) {
+    const contentState = this.state.editorState.getCurrentContent();
+		var content = {
+			content: convertToRaw(contentState),
+			title: convertToRaw(contentState).blocks[0].text
+		}
+
+    axios
+      .post("http://localhost:6200/api/EditContract", contentState)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -34,16 +68,9 @@ class Home extends React.Component {
           <ContractWrapper>
             <InputField>
               <Answer>answer input 1</Answer>
-              <EditContract />
+              <DraftEditorRawExample />
             </InputField>
-            <InputField>
-              <Answer>answer input 2</Answer>
-              <EditContract />
-            </InputField>
-            <InputField>
-              <Answer>answer input 3</Answer>
-              <EditContract />
-            </InputField>
+            
           </ContractWrapper>
           <Contracts />
         </Dashboard>

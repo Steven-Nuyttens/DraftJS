@@ -1,4 +1,9 @@
 import React from "react";
+import Contracts from "./Contracts";
+import DraftEditorRawExample from "./../components/DraftEditorRawExample";
+
+import styled from "styled-components";
+import Header from "./../components/header/header";
 import {
   Editor,
   EditorState,
@@ -8,10 +13,30 @@ import {
   convertFromRaw,
   KeyBindingUtil,
 } from "draft-js";
-import styled from "styled-components";
 import axios from "axios";
+import AlterContracts from "./AlterContracts";
+import storedState from "./storedState.json";
 
-export default class DraftEditorRawExample extends React.Component {
+const InputField = styled.div`
+  margin: 10px;
+  border: 1px solid grey;
+`;
+
+const ContractWrapper = styled.div`
+  border: 3px solid;
+`;
+
+const Dashboard = styled.div`
+  justify-content: center;
+  width: 100%;
+`;
+
+const Answer = styled.h3`
+  display: flex;
+  justify-content: center;
+`;
+
+class Test extends React.Component {
   constructor(props) {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
@@ -25,7 +50,7 @@ export default class DraftEditorRawExample extends React.Component {
 
   postText(e) {
     const contentState = this.state.editorState.getCurrentContent();
-    var content = {
+    let content = {
       content: convertToRaw(contentState),
       title: convertToRaw(contentState).blocks[0].text,
     };
@@ -120,7 +145,8 @@ export default class DraftEditorRawExample extends React.Component {
   }
 
   render() {
-    const { editorState } = this.state;
+    const contentState = convertFromRaw(storedState);
+    const { editorState }= this.state;
     return (
       <div style={styles.root}>
         <ButtonContainer>
@@ -157,7 +183,9 @@ export default class DraftEditorRawExample extends React.Component {
         >
           submit
         </SubmitButton>
+      
       </div>
+
     );
   }
 }
@@ -358,3 +386,5 @@ const blockTypeButtons = [
     block: "ordered-list-item",
   },
 ];
+
+export default Test;
