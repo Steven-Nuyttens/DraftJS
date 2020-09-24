@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const EditContractSchema = new Schema({
     content: {
-        content:Object
+        type:Object
     }
 });
 

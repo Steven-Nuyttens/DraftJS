@@ -5,7 +5,7 @@ var cors = require('cors');
 const nconf = require('nconf');
 const cookieParser = require('cookie-parser');
 const EditContractRoute = require('./src/routes/EditContractRoute');
-
+const UserRoute = require('./src/routes/UserRoute');
 
 var app = express();
 
@@ -39,11 +39,12 @@ app.use(bodyParser.text());
 app.use(bodyParser.json());
 //app.use(basePath, routes);
 app.use(basePath, EditContractRoute);
+//app.use(basePath, UserRoute)
 
 
 
 
-
+// Execute App
 
 
 app.use(express.static(__dirname + '/public'));

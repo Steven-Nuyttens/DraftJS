@@ -48,19 +48,22 @@ const Col = styled.div`
 class Contracts extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { editorState: props.newArticle 
-      ? EditorState.createEmpty() 
-      : EditorState.createWithContent(convertFromRaw(content)) ,
-      open:null };
+    let content = // this needs to be 1 item in DB;
+    this.state = {
+      editorState: props.newArticle
+        ? EditorState.createEmpty()
+        : EditorState.createWithContent(convertFromRaw(content)),
+      open: null,
+    };
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({ editorState });
     this.toggleColor = (toggledColor) => this._toggleColor(toggledColor);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
-    // get contracts from db
   }
+  // get contracts from db
+
   componentDidMount() {
     axios
       .get("/api/EditContract")
@@ -72,6 +75,7 @@ class Contracts extends React.Component {
         console.log(error);
       });
   }
+  
   postText(e) {
     const contentState = this.state.editorState.getCurrentContent();
     let content = {
