@@ -17,7 +17,7 @@ let uri = ''
 if (prod) {
   
 
-  mongoose.connect('mongodb://user@localhost:27017/lawyercontracts', {useNewUrlParser: false})
+  mongoose.connect('mongodb://localhost:27017/lawyercontracts', {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
   // if (nconf.get('mongoDatabase')) {

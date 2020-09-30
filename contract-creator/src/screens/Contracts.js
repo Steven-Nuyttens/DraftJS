@@ -48,13 +48,9 @@ const Col = styled.div`
 class Contracts extends React.Component {
   constructor(props) {
     super(props);
-    let content = // this needs to be 1 item in DB;
-    this.state = {
-      editorState: props.newArticle
-        ? EditorState.createEmpty()
-        : EditorState.createWithContent(convertFromRaw(content)),
-      open: null,
-    };
+    let content = (this.state = { // this needs to be 1 item in DB;
+      editorState: EditorState.createEmpty(),
+    });
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({ editorState });
@@ -68,14 +64,15 @@ class Contracts extends React.Component {
     axios
       .get("/api/EditContract")
       .then((response) => {
-        const content = response.data;
+        const content = {title: convertFromRaw(response).blocks[0].text};
         console.log(content);
+        this.setState(EditorState.createWithContent(content));
       })
       .catch(function (error) {
         console.log(error);
       });
   }
-  
+
   postText(e) {
     const contentState = this.state.editorState.getCurrentContent();
     let content = {
@@ -175,6 +172,7 @@ class Contracts extends React.Component {
   // map trough the contracts and return every contract
   renderContracts(Contract, index) {
     let contractList = _.partition(Contract, index);
+    const {editorState} = this.state;
     let result = contractList[0].map((Contract) => {
       return (
         <ContractCard>
@@ -186,44 +184,10 @@ class Contracts extends React.Component {
   }
 
   render() {
-    const contentState = convertFromRaw(storedState);
     const { editorState } = this.state;
     return (
-      <div style={styles.root}>
-        <ButtonContainer>
-          <ColorControls
-            editorState={editorState}
-            onToggle={this.toggleColor}
-          />
-
-          <div>
-            {blockStyleButton.map((button) => {
-              return this.renderStyleButton(button.value, button.block);
-            })}
-          </div>
-
-          <div>
-            {blockTypeButtons.map((button) => {
-              return this.renderBlockButton(button.value, button.block);
-            })}
-          </div>
-        </ButtonContainer>
-        <div style={styles.editor} onClick={this.focus}>
-          <Editor
-            customStyleMap={colorStyleMap}
-            editorState={editorState}
-            onChange={this.onChange}
-            placeholder="Write something colorful..."
-            ref="editor"
-          />
-        </div>
-        <SubmitButton
-          onClick={(e) => {
-            this.postText(e);
-          }}
-        >
-          submit
-        </SubmitButton>
+      <div>
+        {this.renderContracts(this.state.title)}
       </div>
     );
   }

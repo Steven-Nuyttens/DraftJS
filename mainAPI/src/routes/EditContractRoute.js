@@ -13,10 +13,10 @@ router.get("/EditContract", function (req, res) {
     });
 });
 
-router.post("/EditContract", function (req, res) {
-  console.log(req.data);
+router.post('/EditContract', function (req, res) {
+  console.log(req.body);
   console.log("yes");
-  EditContract.create({ content: req.data })
+  EditContract.create({ content: req.body })
     .then(function (created) {
       res.send(created);
     })

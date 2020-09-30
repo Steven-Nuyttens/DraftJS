@@ -7,6 +7,6 @@ const EditContractSchema = new Schema({
     }
 });
 
-const EditContractModel = mongoose.model('', EditContractSchema)
+const EditContractModel = mongoose.model('contract', EditContractSchema)
 
 module.exports = EditContractModel

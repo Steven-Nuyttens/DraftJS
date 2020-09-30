@@ -49,16 +49,13 @@ class Test extends React.Component {
   }
 
   postText(e) {
-    const contentState = this.state.editorState.getCurrentContent();
-    let content = {
-      content: convertToRaw(contentState),
-      title: convertToRaw(contentState).blocks[0].text,
-    };
-    console.log(content);
+    const contentState = convertToRaw(this.state.editorState.getCurrentContent());
+    
     axios
-      .post("http://localhost:6200/api/EditContract", content)
+      .post("http://localhost:6200/api/EditContract", contentState)
       .then((response) => {
-        console.log(response);
+        console.log(response.config.data);
+        console.log(response.data.content);
       })
       .catch(function (error) {
         console.log(error);
