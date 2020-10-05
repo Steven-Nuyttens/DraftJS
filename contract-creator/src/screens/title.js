@@ -22,11 +22,8 @@ class Titles extends React.Component {
       .get("/api/EditContract")
       .then((response) => {
         const content = response.data;
-        if (content) {
-          this.setState({ editorState: EditorState.createWithContent(convertFromRaw(content)) })
-        } else {
-          this.setState({ editorState: EditorState.createEmpty() });
-        }
+        console.log(content)
+        
         //this.setState({editorState: EditorState.createWithContent(content)})
       })
       .catch(function (error) {
@@ -41,7 +38,7 @@ class Titles extends React.Component {
     let result = contractList[0].map((Contract) => {
       return (
         <Editor
-          editorState={this.state.editorState}
+          editorState={this.setState({editorState: EditorState.createWithContent(Contract)})}
         />
       );
     });
