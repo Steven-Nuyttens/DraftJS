@@ -15,14 +15,15 @@ import {
 class Titles extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = {Contracts: []};
   }
   componentDidMount() {
     axios
       .get("/api/EditContract")
       .then((response) => {
-        const content = response.data;
-        console.log(content)
+        const Contracts = response.data;
+        console.log(Contracts);
+        this.setState({Contracts:Contracts})
         
         //this.setState({editorState: EditorState.createWithContent(content)})
       })
@@ -31,14 +32,14 @@ class Titles extends React.Component {
       });
     };
     
-    renderContracts(Contract, index) {
-      let contractList = _.partition(Contract, index);
+    renderContracts(Contracts, index) {
+      let contractList = _.partition(Contracts, index);
       console.log(contractList);
       console.log('hey')
-    let result = contractList[0].map((Contract) => {
+    let result = contractList[0].map((Contracts) => {
       return (
         <Editor
-          editorState={this.setState({editorState: EditorState.createWithContent(Contract)})}
+          editorState={this.setState({editorState: EditorState.createWithContent(Contracts)})}
         />
       );
     });
